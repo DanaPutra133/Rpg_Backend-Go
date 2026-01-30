@@ -137,7 +137,7 @@ func (s *UserService) ClaimDaily(ctx context.Context, userID string) (map[string
 	}
 
 	// Berikan Hadiah
-	rewardMoney := 5000.0
+	rewardMoney := 10000.0
 	rewardExp := 200.0
 	rewardDiamond := 1.0
 
@@ -166,8 +166,9 @@ func (s *UserService) ClaimDaily(ctx context.Context, userID string) (map[string
 	// Return data user terbaru atau pesan sukses
 	return map[string]interface{}{
 		"status":    true,
-		"message":   fmt.Sprintf("Daily success! Dapat Rp %.0f dan %.0f EXP", rewardMoney, rewardExp),
+		"message":   fmt.Sprintf("Berhasil klaim harian! Dapat Rp %.0f dan %.0f Diamond.", rewardMoney, rewardDiamond),
 		"money":     user["money"],
+		"diamond":   user["diamond"],
 		"lastDaily": user["lastDaily"],
 	}, nil
 }
