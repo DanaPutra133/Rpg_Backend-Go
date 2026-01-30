@@ -139,10 +139,13 @@ func (s *UserService) ClaimDaily(ctx context.Context, userID string) (map[string
 	// Berikan Hadiah
 	rewardMoney := 5000.0
 	rewardExp := 200.0
+	rewardDiamond := 1.0
 
 	// Update Money
 	currentMoney := getFloat(user, "money")
 	user["money"] = currentMoney + rewardMoney
+	currentDiamond := getFloat(user, "diamond")
+	user["diamond"] = currentDiamond + rewardDiamond
 
 	// Update Exp (Nested Logic)
 	if rpg, ok := user["rpg"].(map[string]interface{}); ok {
