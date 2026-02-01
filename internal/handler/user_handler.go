@@ -118,3 +118,18 @@ func (h *UserHandler) GetStats(c echo.Context) error {
 		"data":   data,
 	})
 }
+
+// GET /users/afk (Hanya ambil list user AFK)
+func (h *UserHandler) GetAFKUsers(c echo.Context) error {
+	afkUsers, err := h.Service.GetAFKUsers(c.Request().Context())
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"status": false, "message": "Gagal mengambil data AFK",
+		})
+	}
+
+	return c.JSON(http.StatusOK, map[string]interface{}{
+		"status": true,
+		"data":   map[string]interface{}{"users": afkUsers},
+	})
+}

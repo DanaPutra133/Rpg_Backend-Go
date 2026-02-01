@@ -248,3 +248,7 @@ func (s *UserService) GetLeaderboard(ctx context.Context, lbType string, limit i
 
 	return result, nil
 }
+
+func (s *UserService) GetAFKUsers(ctx context.Context) (map[string]interface{}, error) {
+	return s.Repo.GetAFKUsers(ctx)
+}

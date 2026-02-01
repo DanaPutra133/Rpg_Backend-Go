@@ -77,6 +77,7 @@ func main() {
 		g.GET("/leaderboard", userHandler.GetLeaderboard)
 		g.GET("/stats", userHandler.GetStats)
 		g.POST("/daily/:userId", userHandler.ClaimDaily)
+		g.GET("/users/afk", userHandler.GetAFKUsers)
 	}
 
 	startDailyScheduler(statsRepo)

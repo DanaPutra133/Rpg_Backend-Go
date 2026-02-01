@@ -118,3 +118,31 @@ func (r *UserRepository) GetAllUsers(ctx context.Context) ([]map[string]interfac
 	}
 	return users, nil
 }
+
+// get user AFK
+func (r *UserRepository) GetAFKUsers(ctx context.Context) (map[string]interface{}, error) {
+	query := `SELECT id, data FROM users WHERE json_extract(data, '$.afk') > 0`
+
+	rows, err := r.DB.QueryContext(ctx, query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	result := make(map[string]interface{})
+
+	for rows.Next() {
+		var id string
+		var dataJSON string
+		if err := rows.Scan(&id, &dataJSON); err != nil {
+			continue
+		}
+
+		var userData map[string]interface{}
+		if err := json.Unmarshal([]byte(dataJSON), &userData); err == nil {
+			userData["id"] = id
+			result[id] = userData
+		}
+	}
+	return result, nil
+}
