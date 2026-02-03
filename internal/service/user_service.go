@@ -174,18 +174,22 @@ func (s *UserService) ClaimDaily(ctx context.Context, userID string) (map[string
 }
 
 // Logic Leaderboard
-func (s *UserService) GetLeaderboard(ctx context.Context, lbType string, limit int) ([]map[string]interface{}, error) {
-	users, err := s.Repo.GetAllUsers(ctx)
+func (s *UserService) GetLeaderboard(ctx context.Context, lbType string, limit int) ([]map[string]interface{}, int, error) {
+	usersMap, err := s.Repo.GetAllUsers(ctx)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 
-	// Sorting Logic (Go sort)
+	var users []map[string]interface{}
+	for _, u := range usersMap {
+		users = append(users, u)
+	}
+
+	totalUsers := len(users) // total data user nya
+
 	sort.Slice(users, func(i, j int) bool {
 		a := users[i]
 		b := users[j]
-
-		// Helper to get float val safely
 		getVal := func(m map[string]interface{}, key string) float64 {
 			if v, ok := m[key].(float64); ok {
 				return v
@@ -214,14 +218,11 @@ func (s *UserService) GetLeaderboard(ctx context.Context, lbType string, limit i
 		}
 		return false
 	})
-
-	// Limit
 	if limit > len(users) {
 		limit = len(users)
 	}
 	topUsers := users[:limit]
 
-	// Mapping result (Select fields only)
 	var result []map[string]interface{}
 	for _, u := range topUsers {
 		res := map[string]interface{}{
@@ -231,7 +232,6 @@ func (s *UserService) GetLeaderboard(ctx context.Context, lbType string, limit i
 			"diamond":  u["diamond"],
 		}
 
-		// Extract Level aman
 		if rpg, ok := u["rpg"].(map[string]interface{}); ok {
 			res["level"] = rpg["level"]
 		} else {
@@ -246,9 +246,9 @@ func (s *UserService) GetLeaderboard(ctx context.Context, lbType string, limit i
 		result = append(result, res)
 	}
 
-	return result, nil
+	// Kembalikan: (DataTop10, AngkaTotalUser, Error)
+	return result, totalUsers, nil
 }
-
 func (s *UserService) GetAFKUsers(ctx context.Context) (map[string]interface{}, error) {
 	return s.Repo.GetAFKUsers(ctx)
 }

@@ -92,7 +92,8 @@ func (h *UserHandler) GetLeaderboard(c echo.Context) error {
 	}
 
 	limit, _ := strconv.Atoi(limitStr)
-	data, err := h.Service.GetLeaderboard(c.Request().Context(), lbType, limit)
+	data, totalUsers, err := h.Service.GetLeaderboard(c.Request().Context(), lbType, limit)
+
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"status": false, "message": "Terjadi kesalahan internal.",
@@ -100,7 +101,10 @@ func (h *UserHandler) GetLeaderboard(c echo.Context) error {
 	}
 
 	return c.JSON(http.StatusOK, map[string]interface{}{
-		"status": true, "leaderboard_type": lbType, "data": data,
+		"totalUsers":       totalUsers,
+		"status":           true,
+		"leaderboard_type": lbType,
+		"data":             data,
 	})
 }
 
