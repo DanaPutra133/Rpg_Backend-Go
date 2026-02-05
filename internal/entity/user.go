@@ -74,6 +74,27 @@ func GetDefaultUserMap() map[string]interface{} {
 			"until":  0.0,
 		},
 
+		"motor": map[string]interface{}{
+			"Name":          "",
+			"Bensin":        0.0,
+			"Durability":    0.0,
+			"MaxDurability": 100.0,
+			"maxBensin":     100.0,
+		},
+		"motorGrade2": map[string]interface{}{
+			"Name":          "",
+			"Bensin":        0.0,
+			"Durability":    0.0,
+			"maxBensin":     200.0,
+			"MaxDurability": 250.0,
+		},
+		"motorGrade3": map[string]interface{}{
+			"Name":          "",
+			"Bensin":        0.0,
+			"Durability":    0.0,
+			"maxBensin":     300.0,
+			"MaxDurability": 350.0,
+		},
 		// --- Transport & Jobs ---
 		"taxi":          0.0,
 		"lasttaxi":      0.0,
@@ -91,6 +112,7 @@ func GetDefaultUserMap() map[string]interface{} {
 		"laper":         100.0,
 		"tprem":         0.0,
 		"stamina":       100.0,
+		"Health":        100.0,
 		"follow":        0.0,
 		"lastfollow":    0.0,
 		"followers":     0.0,
