@@ -74,25 +74,11 @@ func GetDefaultUserMap() map[string]interface{} {
 			"until":  0.0,
 		},
 		"motor": map[string]interface{}{
-			"status": false,
-			"motorGrade1": map[string]interface{}{
-				"status":     false,
-				"Name":       "",
-				"Bensin":     100.0,
-				"Durability": 100.0,
-			},
-			"motorGrade2": map[string]interface{}{
-				"status":     false,
-				"Name":       "",
-				"Bensin":     200.0,
-				"Durability": 200.0,
-			},
-			"motorGrade3": map[string]interface{}{
-				"status":     false,
-				"Name":       "",
-				"Bensin":     300.0,
-				"Durability": 350.0,
-			},
+			"status":     false,
+			"motorGrade": "",
+			"Name":       "",
+			"Bensin":     100.0,
+			"Durability": 100.0,
 		},
 
 		// --- Transport & Jobs ---
